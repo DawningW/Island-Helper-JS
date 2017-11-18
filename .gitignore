@@ -10,6 +10,7 @@
 # include markdowns
 !LICENSE
 !README.md
+!version.json
 
 # include git important files
 !.gitmodules
