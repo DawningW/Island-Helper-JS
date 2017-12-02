@@ -1,3 +1,6 @@
+/* =========================
+// Config.js : A class can save configs
+ =========================*/
 const CONFIG_LEVEL = {
 basic: 0,
 property: 1,

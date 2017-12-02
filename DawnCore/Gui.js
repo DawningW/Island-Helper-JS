@@ -1,3 +1,6 @@
+/* =========================
+// Gui.js : A class manage Android Activities
+ =========================*/
 /* GUI函数 */
 /* 备注: 其实这些都是曙光API未完成的东东啦
 3	AutoCompleteTextView

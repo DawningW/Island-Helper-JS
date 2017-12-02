@@ -1,3 +1,6 @@
+/* =========================
+// Game.js : A class manage Minecraft logics
+ =========================*/
 /* 游戏工具函数 */
 /** registerItem 用于注册一个物品
  * 参数: int(请见ITEM_TYPE) type 物品种类

@@ -1,16 +1,16 @@
-/* 各种常量 */
-
-
-
-var infoer = new Info();
-var logger = new Log();
-var configer = new Config();
-var updater = new Update();
-var langer = new Lang();
-var addoner = new Addon();
-var guier = new Gui();
-var gamer = new Game();
-var cmder = new Server();
+/* =========================
+// main.js : Main function and global variables
+ =========================*/
+// 常量
+const infoer = new Info();
+const logger = new Log();
+const configer = new Config();
+const updater = new Update();
+const langer = new Lang();
+const addoner = new Addon();
+const guier = new Gui();
+const gamer = new Game();
+const cmder = new Server();
 
 function init()
 {
@@ -23,6 +23,17 @@ function init()
 	// Init guier
 	// Init gamer
 	// Init cmder
+}
+
+// Getter
+function getInfo()
+{
+    return infoer;
+}
+
+function getLog()
+{
+    return logger;
 }
 
 // ================================

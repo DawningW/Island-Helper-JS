@@ -1,3 +1,6 @@
+/* =========================
+// Addon.js : A class manage appendant
+ =========================*/
 function Addon()
 {
 this.addons = {};

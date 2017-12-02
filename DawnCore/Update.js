@@ -1,3 +1,6 @@
+/* =========================
+// Update.js : A class can find update
+ =========================*/
 /* 检查更新 */
 /** Version 一个类，记录版本信息
  * 参数: string content 版本号字符串

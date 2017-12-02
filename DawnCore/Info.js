@@ -1,4 +1,6 @@
-// =========================
+/* =========================
+// Info.js : A collection of JS' infomation
+ =========================*/
 const STORAGE = android.os.Environment.getExternalStorageDirectory().getPath();
 const JS_DIR =  STORAGE + "/games/com.mojang/minecraftpe/js/";
 const WORLDS_DIR = STORAGE + "/games/com.mojang/minecraftWorlds/";

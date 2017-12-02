@@ -1,3 +1,6 @@
+/* =========================
+// Log.js : A class can print some log
+ =========================*/
 // =========================
 const LOG_LEVELS = createEnum("debug", "null", "info", "warn", "error");
 /** Logger 一个类，用于输出日志
