@@ -1,81 +1,128 @@
 /* =========================
 // Update.js : A class can find update
  =========================*/
-/* 检查更新 */
-/** Version 一个类，记录版本信息
+
+/** 记录版本信息
  * 参数: string content 版本号字符串
  * 方法: toString 返回版本号字符串
  * 作者: QingChenW
  * 备注: 支持更复杂的带后缀的版本号(目前仅支持alpha,beta,rc)
- *       还有就是版本号建议根据语义化版本2.0.0制定
- * 例子: 1.0.0-rc 1
- *       2.0-beta 2
+ *       还有就是版本号必须根据语义化版本2.0.0制定
+ * 例子: 1.1.0-rc.1
+ *       2.2.2-beta.2
+ *       3.0.3-alpha.3+201801291602
  */
-function Version(content)
+
+// Import
+const UPDATE_LOADED = true; // 标记Update.js已加载的宏
+// Const
+
+// Suffix Version Types
+const VERSION_TYPES = {alpha: 0, beta: 1, gamma: 2, rc: 2, release: Infinity};
+// Version Class
+function Version()
 {
-this.isVaild = false;
-this.version = {};
+// Fields
+this.version = {}; // 版本号
+this.vaild = false; // 是否有效
+// Set
+this.set = new function(content)
+{
 if(content != undefined)
 {
-this.isVaild = true;
-var parts = content.split("-");
-this.version.number = parts[0].split(".");
-this.version.suffix = parts[1].split(" ");
-switch(this.version.suffix[0])
-{
-//case default: this.version.suffixNum = 0;break;
-case "alpha": this.version.suffixNum = 1;break;
-case "beta": this.version.suffixNum = 2;break;
-case "rc": this.version.suffixNum = 3;break;
+content = content.split("+");
+this.version.build = content[1];
+content = content[0].split("-");
+this.version.suffix.name = getValue(content[1].split(".")[0], "release");
+if(VERSION_TYPES[this.version.suffix.name] == undefined) this.version.suffix.name = "release";
+this.version.suffix.number = getValue(content[1].split(".")[1], 0);
+content = content[0].split(".");
+this.version.main.major = getValue(content[0], 0);
+this.version.main.minor = getValue(content[1], 0);
+this.version.main.patch = getValue(content[2], 0);
+this.vaild = true;
 }
 }
-this.toString = function(){
-return new Array(this.version.number.join("."), this.version.suffix.join(" ")).join("-");
-};
+// Get
+this.get = new function()
+{
+var content = this.getMainNumber();
+if(this.getSuffixName() != undefined || this.getSuffixName() != "release")
+{
+content = content + "-" + this.getSuffix();
 }
-
-/** Version.prototype.compare 比较版本
- * 参数: Version newVersion 新版本
- * 返回值: boolean true 有新版本
- *         boolean false 无新版本
- *         null 错误
- * 作者: QingChenW
- */
-Version.prototype.compare = function(newVersion)
+if(this.getBuild() != undefined)
 {
-if(newVersion.isVaild)
-{
-if(this.version.number.length == newVersion.version.number.length)
-{
-for(var i = 0; i < this.version.number.length; i++)
-{
-if(newVersion.version.number[i] > this.version.number[i]) return true;
-else if(newVersion.version.number[i] < this.version.number[i]) return false;
+content = content + "+" + this.getBuild();
 }
-if(newVersion.version.suffixNum > this.version.suffixNum)
-{
-return true;
+return content;
 }
-else if(newVersion.version.suffixNum == this.version.suffixNum)
+this.getMainNumber = new function()
 {
-if(newVersion.version.suffix[1] > this.version.suffix[1]) return true;
+return (new Array(this.getMajor(), this.getMinor(), this.getPatch())).join(".");
+}
+this.getMajor = new function()
+{
+return this.version.main.major;
+}
+this.getMinor = new function()
+{
+return this.version.main.minor;
+}
+this.getPatch = new function()
+{
+return this.version.main.patch;
+}
+this.getSuffix = new function()
+{
+return (new Array(this.getSuffixName(), this.getSuffixNumber())).join(".");
+}
+this.getSuffixName = new function()
+{
+return this.version.suffix.name;
+}
+this.getSuffixNumber = new function()
+{
+return this.version.suffix.number;
+}
+this.getBuild = new function()
+{
+return this.version.build;
+}
+// Compare
+this.compare = new function(version)
+{
+if(this.vaild && version.vaild)
+{
+if(version.getMajor() > this.getMajor()) return true;
+else if(version.getMajor() == this.getMajor())
+{
+if(version.getMinor() > this.getMinor()) return true;
+else if(version.getMinor() == this.getMinor())
+{
+if(version.getPatch() > this.getPatch()) return true;
+else if(version.getPatch() == this.getPatch())
+{
+if(VERSION_TYPES[version.getSuffixName()] > VERSION_TYPES[this.getSuffixName()]) return true;
+else if(VERSION_TYPES[version.getSuffixName()] == VERSION_TYPES[this.getSuffixName()])
+{
+if(version.getSuffixNumber() > this.getSuffixNumber()) return true;
+}
+}
+}
 }
 return false;
 }
-throw "版本号位数不同,无法比较";
-}
 return null;
-};
-
-/** Version.prototype.analyse 解析一个版本json并比较
- * 参数: json/string json 新版本(如果传入的是字符串会尝试转为json,失败则返回null)
- * 返回值: boolean true 有新版本
- *         boolean false 无新版本
- *         null 错误
- * 作者: QingChenW
- * 备注: 尚未完成
- */
-Version.prototype.analyse = function(json)
+}
+// Analyse
+this.analyse = new function(json)
 {
-    
+
+}
+// ToString
+this.toString = new function()
+{
+return this.get();
+}
 }

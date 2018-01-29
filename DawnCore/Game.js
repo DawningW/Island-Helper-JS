@@ -1,6 +1,11 @@
 /* =========================
 // Game.js : A class manage Minecraft logics
  =========================*/
+
+// 常量
+const GAME_LOADED = true; // 标记Game.js已加载的宏
+
+
 /* 游戏工具函数 */
 /** registerItem 用于注册一个物品
  * 参数: int(请见ITEM_TYPE) type 物品种类

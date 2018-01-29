@@ -1,38 +1,59 @@
 /* =========================
 // Log.js : A class can print some log
  =========================*/
-// =========================
-const LOG_LEVELS = createEnum("debug", "null", "info", "warn", "error");
-/** Logger 一个类，用于输出日志
- * 参数: 
- * 作者: QingChenW
- * 备注: 日志会存储在目录下创建的logs文件夹中
- */
+
+// Import
+const LOG_LOADED = true; // 标记Log.js已加载的宏
+// Log Levels
+const LOG_LEVELS = {debug: "debug", nul: "null", info: "info", warn: "warn", error: "error"};
+const LOG_SHOW_LEVELS = {debug: 0, nul: 1, info: 2, warn: 3, error: 4};
+// Log Class
 function Log()
 {
-this.date = new Date();
-this.path = infoer.jsPath + "logs/";
-this.name = infoer.get(INFO_TYPES.NAME) + format(, "_yyyy-MM-dd") + ".log";
-this.showLevel = LOG_LEVELS.INFO;
-save(this.path, this.name, true, "+-+-===日志初始化完成===-+-+\n");
+// Fields
+this.showLevel = LOG_LEVELS.info; // 输出等级
+this.logFile = null; // 日志文件
+this.logCache = new Array(); // 日志缓存
+this.canWrite = false; // 是否可写入
+// Log
+this.log = new function(level, content)
+{
+if(level == LOG_LEVELS[level] && LOG_SHOW_LEVELS[level] >= LOG_SHOW_LEVELS[this.showLevel])
+{
+content = "[" + format(new Date(), "hh:mm:ss") + "]" + "[" + level + "]" + content;
+System.out.println(content);
+this.logCache.push(content);
+this.save();
 }
-
-/** Logger.prototype.log 向日志中输出文字
- * 参数: enum level 等级(详见LOG_LEVELS)
- *       string content 内容
- * 作者: QingChenW
- */
-Logger.prototype =
+}
+// Save
+this.save = new function()
 {
-setShowLevel: new function(type)
+if(this.canWrite)
 {
-this.showLevel = type;
-},
-log: function(level, content)
+while(this.logCache.length > 0)
 {
-return save(this.path, this.name, true,
-"[" + format(new Date(), "hh:mm:ss") + "]"
-+ "[" + languager.get("log." + type) + "]"
-+ content + "\n");
+save(this.logPath, this.logName, true, this.logCache.shift());
+}
+}
+}
+// SetShowLevel
+this.setShowLevel = new function(level)
+{
+if(level == LOG_LEVELS[level])
+this.showLevel = level;
+}
+// Init
+this.init = new function()
+{
+var path = getInfo().dataPath + "/logs";
+var name = getInfo().get(INFO_TYPES.name) + format(new Date(), "_yyyy-MM-dd") + ".log";
+this.logFile = new java.io.File(path, name);
+this.canWrite = true;
+}
+// ToString
+this.toString = new function()
+{
+return loadFile(this.logFile);
 }
 }

@@ -1,6 +1,11 @@
 /* =========================
-// utils.js : A lot of functions that are useful
+// Utils.js : A lot of functions that are useful
  =========================*/
+
+// 常量
+const UTILS_LOADED = true; // 标记Utils.js已加载的宏
+
+
 /* 工具函数 */
 
 /** getValue 反序列化一个值，并且如果该值不存在则返回默认值
@@ -163,17 +168,29 @@ try {
  *       string content 文件内容
  * 作者: 来自MxGoldo的minimap-mcpe,QingChenW修改
  */
-function save(path, filename, write, content)
+function save(path, name, write, content)
 {
 try
 {
 java.io.File(path).mkdirs();
-var newFile = new java.io.File(path, filename);
-newFile.createNewFile();
-var outWrite = new java.io.OutputStreamWriter(new java.io.FileOutputStream(newFile, write));
-outWrite.append(content);
-outWrite.close();
-return true;
+var file = new java.io.File(path, name);
+file.createNewFile();
+return saveFile(file, write, content);
+}
+catch(error)
+{
+print("save, " + error + " (" + error.fileName + " #" + error.lineNumber + ")");
+return false;
+}
+}
+
+function saveFile(file, write, content)
+{
+try
+{
+var writer = new java.io.OutputStreamWriter(new java.io.FileOutputStream(file, write));
+writer.append(content);
+writer.close();
 }
 catch(error)
 {
@@ -189,12 +206,19 @@ return false;
  * 作者: 来自MxGoldo的minimap-mcpe
  * 备注: 我将最后的返回值强制转换成了string
  */
-function load(path, filename)
+function load(path, name)
 {
-var content = "";
-if(java.io.File(path + filename).exists())
+if(java.io.File(path, name).exists())
 {
-var file = new java.io.File(path + filename),
+var file = new java.io.File(path, name);
+return loadFile(file);
+}
+return "";
+}
+
+function loadFile(file)
+{
+var content = "",
 fos = new java.io.FileInputStream(file),
 str = new java.lang.StringBuilder(),
 ch;
@@ -202,8 +226,7 @@ while((ch = fos.read()) != -1)
 {
 str.append(java.lang.Character(ch));
 }
-content = String(str.toString());
 fos.close();
-}
+content = String(str.toString());
 return content;
 }

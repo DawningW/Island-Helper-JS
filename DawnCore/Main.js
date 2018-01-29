@@ -1,28 +1,32 @@
 /* =========================
 // main.js : Main function and global variables
  =========================*/
-// 常量
-const infoer = new Info();
-const logger = new Log();
-const configer = new Config();
-const updater = new Update();
-const langer = new Lang();
-const addoner = new Addon();
-const guier = new Gui();
-const gamer = new Game();
-const cmder = new Server();
+
+// Const
+const infoer = INFO_LOADED ? new Info() : null;
+const logger = LOG_LOADED ? new Log() : null;
+const configer = CONFIG_LOADED ? new Config() : null;
+const addoner = ADDON_LOADED ? new Addon() : null;
+const updater = UPDATE_LOADED ? new Update() : null;
+const langer = LANG_LOADED ? new Lang() : null;
+const gamer = GAME_LOADED ? new Game() : null;
+const cmder = SERVER_LOADED ? new Server() : null;
+const guier = GUI_LOADED ? new Gui() : null;
 
 function init()
 {
-	// Init infoer
-	// Init logger
-	// Init addoner
-	// Init configer
-	// Init langer
-	// Init updater
-	// Init guier
-	// Init gamer
-	// Init cmder
+// Init Infoer
+getInfo().init();
+// Init logger
+getLog().init();
+// Init configer
+getConfig().init();
+// Init addoner
+// Init updater
+// Init langer
+// Init gamer
+// Init cmder
+// Init guier
 }
 
 // Getter
@@ -34,6 +38,41 @@ function getInfo()
 function getLog()
 {
     return logger;
+}
+
+function getConfig()
+{
+    return configer;
+}
+
+function getAddon()
+{
+    return addoner;
+}
+
+function getUpdate()
+{
+    return updater;
+}
+
+function getLang()
+{
+    return langer;
+}
+
+function getGame()
+{
+    return gamer;
+}
+
+function getServer()
+{
+    return cmder;
+}
+
+function getGui()
+{
+    return guier;
 }
 
 // ================================

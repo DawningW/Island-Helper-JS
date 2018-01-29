@@ -1,34 +1,14 @@
 /* =========================
 // Classes.js : Other classes that are helpful
  =========================*/
+
+// 常量
+const CLASSES_LOADED = true; // 标记Classes.js已加载的宏
+
+
 // =========================
 /* 工具类 */
 // (完全没有卵用的吐槽:额其实js是面向对象的,刚学的时候我完全不知道,好吧我刚学的时候连对象是啥都不知道...)
-// Enum class
-function Enum()
-{
-	
-}
-
-function createEnums(types)
-{
-var enums = {};
-for(type : arguments)
-{
-enums[type.toUpperCase()] = type.toLowerCase();
-}
-return enums;
-}
-
-function addEnums(enums, types)
-{
-var types = arguments.slice(1);
-for(type : types)
-{
-enums[type.toUpperCase()] = type.toLowerCase();
-}
-return enums;
-}
 
 // TODO:有时间写个迭代器
 /** Array.prototype.contains 检查数组中是否包含指定元素

@@ -1,6 +1,10 @@
 /* =========================
 // Gui.js : A class manage Android Activities
  =========================*/
+
+// 常量
+const GUI_LOADED = true; // 标记Gui.js已加载的宏
+
 /* GUI函数 */
 /* 备注: 其实这些都是曙光API未完成的东东啦
 3	AutoCompleteTextView

@@ -1,27 +1,35 @@
 /* =========================
-// Info.js : A collection of JS' infomation
+// Info.js : A collection of infomation
  =========================*/
-const STORAGE = android.os.Environment.getExternalStorageDirectory().getPath();
-const JS_DIR =  STORAGE + "/games/com.mojang/minecraftpe/js/";
-const WORLDS_DIR = STORAGE + "/games/com.mojang/minecraftWorlds/";
 
-const INFO_TYPES = createEnum("id", "name", "author", "credit", "website", "update", "depandence");
+// Import
+const INFO_LOADED = true; // 标记Info.js已加载的宏
+// Const
+const STORAGE = android.os.Environment.getExternalStorageDirectory().getPath();
+const SCRIPTS_DIR = STORAGE + "/games/com.mojang/minecraftpe/scripts/";
+const WORLDS_DIR = STORAGE + "/games/com.mojang/minecraftWorlds/";
+// Info Types
+const INFO_TYPES = {id: "id", name: "name", author: "author", credit: "credit", website: "website", update: "update", depandence: "depandence"};
+// Info Class
 function Info()
 {
-this.information = {};
-this.jsPath = JS_DIR + this.information.ID;
+// Fields
+this.information = new Array(); // 插件信息
+this.dataPath = null; // 插件目录
+// Setter
 this.set = new function(type, contect)
 {
-if(type != undefined)
-{
+if(type == INFO_TYPES[type])
 this.information[type] = contect;
-}
 return this;
 }
+// Getter
 this.get = new function(type)
 {
-return this.information[type.toLowerCase()];
+if(type == INFO_TYPES[type])
+return this.information[type];
 }
+// Load
 this.load ＝ new function(stream)
 {
 
@@ -34,21 +42,19 @@ this.loadFromResourcePack = new function(name)
 {
 
 }
-this.getTypeLang = new function(type)
+// Init
+this.init = new function()
 {
-return langer.get("info." + type);
-};
+this.dataPath = SCRIPTS_DIR + this.get(INFO_TYPES.id);
+}
+// ToString
 this.toString = new function()
 {
-var infos = {};
-for(type : types)
+var info = new Array();
+for(var type in INFO_TYPES)
 {
-infos.add(this.getTypeLang(type) + ": " + this.get(type)
+info.add(INFO_TYPES + ": " + this.get(type);
 }
-return infos.join("\n");
-}
-this.join = new function(split)
-{
-	
+return info.join("\n");
 }
 }
