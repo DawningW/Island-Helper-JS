@@ -2,8 +2,22 @@
 // Gui.js : A class manage Android Activities
  =========================*/
 
-// 常量
+// Import
 const GUI_LOADED = true; // 标记Gui.js已加载的宏
+// Const
+
+// Gui Class
+function Gui()
+{
+// Fields
+this.activity = getMainActivity();
+
+}
+
+
+
+
+
 
 /* GUI函数 */
 /* 备注: 其实这些都是曙光API未完成的东东啦
@@ -413,7 +427,7 @@ function getHeight()
 {
 return ctx.getWindowManager().getDefaultDisplay().getHeight();
 }
-function getActivity()
+function getMainActivity()
 {
 return com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
 }

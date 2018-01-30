@@ -9,13 +9,14 @@ const STORAGE = android.os.Environment.getExternalStorageDirectory().getPath();
 const SCRIPTS_DIR = STORAGE + "/games/com.mojang/minecraftpe/scripts/";
 const WORLDS_DIR = STORAGE + "/games/com.mojang/minecraftWorlds/";
 // Info Types
-const INFO_TYPES = {id: "id", name: "name", author: "author", credit: "credit", website: "website", update: "update", depandence: "depandence"};
+const INFO_TYPES = {id: "id", name: "name", version: "version", author: "author", credit: "credit", website: "website", update: "update", depandence: "depandence"};
 // Info Class
 function Info()
 {
 // Fields
 this.information = new Array(); // 插件信息
 this.dataPath = null; // 插件目录
+this.version = null; // 版本类
 // Setter
 this.set = new function(type, contect)
 {
@@ -30,7 +31,11 @@ if(type == INFO_TYPES[type])
 return this.information[type];
 }
 // Load
-this.load ＝ new function(stream)
+this.load = new function(content)
+{
+
+}
+this.loadFromStream = new function(stream)
 {
 
 }
@@ -41,11 +46,6 @@ this.loadFromFile = new function(name)
 this.loadFromResourcePack = new function(name)
 {
 
-}
-// Init
-this.init = new function()
-{
-this.dataPath = SCRIPTS_DIR + this.get(INFO_TYPES.id);
 }
 // ToString
 this.toString = new function()

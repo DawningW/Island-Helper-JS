@@ -16,13 +16,29 @@ const guier = GUI_LOADED ? new Gui() : null;
 function init()
 {
 // Init Infoer
-getInfo().init();
+getInfo().dataPath = SCRIPTS_DIR + this.get(INFO_TYPES.id);
+getInfo().version = new Version(getInfo().get(INFO_TYPES.version));
+var path = getInfo().dataPath;
+var name = getInfo().get(INFO_TYPES.name), name2;
+name2 = name + format(new Date(), "_yyyy-MM-dd") + ".log");
 // Init logger
-getLog().init();
+getLog().setFile(new java.io.File(path + "/logs", name2);
+getLog().canWrite = true;
 // Init configer
-getConfig().init();
+name2 = name;
+switch(getConfig().confType)
+{
+default:
+case CONFIG_TYPES.basic: name2 += ".cfg"; break;
+case CONFIG_TYPES.property: name2 += ".ini"; break;
+case CONFIG_TYPES.json: name2 += ".json"; break;
+}
+getConfig().setFile(new java.io.File(path, name2));
 // Init addoner
+getAddon().loadFromList(null);
 // Init updater
+var updateJSON = httpGet(getInfo().get(INFO_TYPES.update));
+getInfo().version.analyse(updateJSON);
 // Init langer
 // Init gamer
 // Init cmder

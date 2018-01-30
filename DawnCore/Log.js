@@ -21,7 +21,7 @@ this.log = new function(level, content)
 if(level == LOG_LEVELS[level] && LOG_SHOW_LEVELS[level] >= LOG_SHOW_LEVELS[this.showLevel])
 {
 content = "[" + format(new Date(), "hh:mm:ss") + "]" + "[" + level + "]" + content;
-System.out.println(content);
+ModPE.log(content);
 this.logCache.push(content);
 this.save();
 }
@@ -43,13 +43,10 @@ this.setShowLevel = new function(level)
 if(level == LOG_LEVELS[level])
 this.showLevel = level;
 }
-// Init
-this.init = new function()
+// Set File
+this.setFile = new function(file)
 {
-var path = getInfo().dataPath + "/logs";
-var name = getInfo().get(INFO_TYPES.name) + format(new Date(), "_yyyy-MM-dd") + ".log";
-this.logFile = new java.io.File(path, name);
-this.canWrite = true;
+this.logFile = file;
 }
 // ToString
 this.toString = new function()

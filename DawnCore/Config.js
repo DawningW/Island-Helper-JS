@@ -26,7 +26,7 @@ if(this.confType == CONFIG_TYPES.basic)
 this.configuration[keys[0]] = value;
 this.comments[keys[0]] = comment;
 }
-else if(this.type == CONFIG_TYPES.property)
+else if(this.confType == CONFIG_TYPES.property)
 {
 var section = getValue(keys[0], "Default");
 if(this.configuration[section] == undefined) this.configuration[section] = {};
@@ -34,7 +34,7 @@ this.configuration[section][keys[1]] = value;
 if(this.comments[section] == undefined) this.comments[section] = {};
 this.comments[section][keys[1]] = comment;
 }
-else if(this.type == CONFIG_TYPES.json)
+else if(this.confType == CONFIG_TYPES.json)
 {
 throw "您无法为json类型的配置文件设置默认值,请手动处理";
 }
@@ -43,17 +43,17 @@ throw "您无法为json类型的配置文件设置默认值,请手动处理";
 this.set = function(key, value)
 {
 var keys = key.split(".");
-if(this.type == CONFIG_TYPES.basic)
+if(this.confType == CONFIG_TYPES.basic)
 {
 this.confCache[keys[0]] = value;
 }
-else if(this.type == CONFIG_TYPES.property)
+else if(this.confType == CONFIG_TYPES.property)
 {
 var section = getValue(keys[0], "Default");
 if(this.confCache[section] == undefined) this.confCache[section] = {};
 this.confCache[section][keys[1]] = value;
 }
-else if(this.type == CONFIG_TYPES.json)
+else if(this.confType == CONFIG_TYPES.json)
 {
 this.confCache = value;
 }
@@ -63,15 +63,15 @@ this.save();
 this.get = function(key)
 {
 var keys = key.split(".");
-if(this.type == CONFIG_TYPES.basic)
+if(this.confType == CONFIG_TYPES.basic)
 {
 return this.confCache[keys[0]];
 }
-else if(this.type == CONFIG_TYPES.property)
+else if(this.confType == CONFIG_TYPES.property)
 {
 return this.confCache[keys[0]][keys[1]];
 }
-else if(this.type == CONFIG_TYPES.json)
+else if(this.confType == CONFIG_TYPES.json)
 {
 return this.confCache;
 }
@@ -79,7 +79,7 @@ return this.confCache;
 // Load
 this.load = function()
 {
-if(this.type == CONFIG_TYPES.basic)
+if(this.confType == CONFIG_TYPES.basic)
 {
 var temp = {};
 for(var entry in loadFile(this.confFile).split("\n"))
@@ -95,7 +95,7 @@ for(var i in this.configuration)
 this.confCache[i] = getValue(temp[i], this.configuration[i]);
 }
 }
-else if(this.type == CONFIG_TYPES.property)
+else if(this.confType == CONFIG_TYPES.property)
 {
 var section = "Default", temp = {};
 for(var entry in loadFile(this.confFile).split("\n"))
@@ -123,7 +123,7 @@ this.confCache[j][k] = getValue(temp[j][k], this.configuration[j][k]);
 }
 }
 }
-else if(this.type == CONFIG_TYPES.json)
+else if(this.confType == CONFIG_TYPES.json)
 {
 this.confCache = JSON.parse(loadFile(this.confFile));
 }
@@ -131,7 +131,7 @@ this.confCache = JSON.parse(loadFile(this.confFile));
 // Save
 this.save = function()
 {
-if(this.type == CONFIG_TYPES.basic)
+if(this.confType == CONFIG_TYPES.basic)
 {
 var temp = [];
 temp.push("// " + getInfo().get(INFO_TYPES.name) + " configuration");
@@ -143,7 +143,7 @@ temp.push(i + ":" + setValue(this.confCache[i], this.configuration[i]));
 }
 saveFile(this.confFile, false, temp.join("\n"));
 }
-else if(this.type == CONFIG_TYPES.property)
+else if(this.confType == CONFIG_TYPES.property)
 {
 var temp = [];
 temp.push("# " + getInfo().get(INFO_TYPES.name) + " configuration");
@@ -159,25 +159,22 @@ temp.push(k + "=" + setValue(this.confCache[j][k], this.configuration[j][k]));
 }
 saveFile(this.confFile, false, temp.join("\n"));
 }
-else if(this.type == CONFIG_TYPES.json)
+else if(this.confType == CONFIG_TYPES.json)
 {
 var temp = JSON.stringify(this.confCache, null, 4);
 saveFile(this.confFile, false, temp.join("\n"));
 }
 }
-// Init
-this.init = new function()
+// Set Type
+this.setType = new function(type)
 {
-var path = getInfo().dataPath + "/configs";
-var name = getInfo().get(INFO_TYPES.name);
-switch(this.confType)
-{
-default:
-case CONFIG_TYPES.basic: name += ".cfg"; break;
-case CONFIG_TYPES.property: name += ".ini"; break;
-case CONFIG_TYPES.json: name += ".json"; break;
+if(type == CONFIG_TYPES[type])
+this.confType = type;
 }
-this.confFile = new java.io.File(path, name);
+// Set File
+this.setFile = new function(file)
+{
+this.logFile = file;
 }
 // ToString
 this.toString = new function()

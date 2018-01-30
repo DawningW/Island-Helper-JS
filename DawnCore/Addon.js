@@ -31,6 +31,11 @@ this.hasAddon = new function(id)
 {
 return this.getInstance(id) != null;
 }
+// Load List
+this.loadFromList = new function(list)
+{
+
+}
 // ToString
 this.toString ＝ new function()
 {
@@ -43,7 +48,7 @@ return list.join("\n");
 }
 }
 // Addon Class
-function Unit()
+function Plugin()
 {
 
 }

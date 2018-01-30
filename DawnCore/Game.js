@@ -2,9 +2,94 @@
 // Game.js : A class manage Minecraft logics
  =========================*/
 
-// 常量
+// Import
 const GAME_LOADED = true; // 标记Game.js已加载的宏
+// Const
 
+// Game Class
+function Game()
+{
+this.newLevel = new function(){};
+this.modTick = new function(){};
+}
+
+function newLevel()
+{
+getGame().newLevel();
+getGui().setupUI();
+}
+function screenChangeHook(screenName)
+{
+
+}
+function modTick()
+{
+getGame().modTick();
+}
+function explodeHook(entity, x, y, z, power, onFire)
+{
+
+}
+function useItem(x, y, z, itemid, blockid, side, itemDamage, blockDamage)
+{
+
+}
+function startDestroyBlock(x, y, z, side)
+{
+
+}
+function continueDestroyBlock(x, y, z, side, progress)
+{
+
+}
+function destroyBlock(x, y, z, side)
+{
+
+}
+function redstoneUpdateHook(x, y, z, newCurrent, someBooleanIDontKnow, blockId, blockData)
+{
+
+}
+function entityAddedHook(entity)
+{
+
+}
+function entityRemovedHook(entity)
+{
+
+}
+function attackHook(attacker, victim)
+{
+
+}
+function deathHook(attacker, victim)
+{
+
+}
+function entityHurtHook(attacker, victim, halfhearts)
+{
+
+}
+function projectileHitBlockHook(projectile, blockX, blockY, blockZ, side)
+{
+
+}
+function projectileHitEntityHook(projectile, targetEntity)
+{
+
+}
+function eatHook(hearts, saturationRatio)
+{
+
+}
+function playerAddExpHook(player, experienceAdded)
+{
+
+}
+function playerExpLevelChangeHook(player, levelsAdded)
+{
+
+}
 
 /* 游戏工具函数 */
 /** registerItem 用于注册一个物品
